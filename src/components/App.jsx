@@ -18,15 +18,33 @@ export class App extends Component {
     ],
     filter: '',
   };
+  //монтування Component
+  componentDidMount() {
+    const dataComponent = JSON.parse(localStorage.getItem('contacts'));
+    console.log(dataComponent);
+
+    if (dataComponent) {
+      this.setState({ contacts: dataComponent });
+    }
+  }
+  //оновлення Component
+  componentDidUpdate(prevProps, prevState) {
+    // console.log('App componentDidUpdate');
+    if (this.state.contacts !== prevState.contacts) {
+      // console.log('Обновилось поле contacts ');
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   // створення нового контакта
   addNewContact = data => {
     const { contacts } = this.state;
     if (
       contacts.some(
-        ({ name }) => name.toLocaleLowerCase() === data.name.toLocaleLowerCase()
+        ({ number }) =>
+          number.toLocaleLowerCase() === data.number.toLocaleLowerCase()
       )
     )
-      return Notify.info(`${data.name} is already in contacts`);
+      return Notify.info(`${data.number} is already in contacts`);
     else
       this.setState(prevState => ({
         contacts: [...prevState.contacts, newContact],

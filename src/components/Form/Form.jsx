@@ -24,9 +24,13 @@ class Form extends Component {
 
   render() {
     const { name, number } = this.state;
+    const patternNumber =
+      /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
+    const patternName =
+      /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
 
     return (
-      <Container onSubmit={this.handleSubmit} autoComplete="on">
+      <Container onSubmit={this.handleSubmit}>
         <div>
           <Label>
             Name
@@ -35,8 +39,9 @@ class Form extends Component {
               type="text"
               name="name"
               value={name}
+              autocomplete="on"
               placeholder="Enter name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              pattern={patternName}
               title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
               required
             />
@@ -48,9 +53,10 @@ class Form extends Component {
               type="tel"
               name="number"
               value={number}
-              // autoComplete="off"
+              autocomplete="on"
               placeholder="Enter number 000-00-00"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              pattern={patternNumber}
+              // maxlength="12"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
               required
             />
